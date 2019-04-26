@@ -1,20 +1,17 @@
-# GetThereSafe-nwHacks
-##A Google Maps API web application to map out the safest route to your destination depending on the time of day - created for nwHacks 2016
+# Get There Safe
 
+Gettheresafe is a Google Maps API web application to map out the safest route to your destination depending on the time of day.
 
---------
+## Why?
 
-[Website](http://www.gettheresafe.net/)
+Created for NWHacks 2016
 
-"This is amazing.... I got home semi-safe."
-> Dominique
+## Awards
 
-"Yes, finally an web app I sort of need."
-> AJ
+Won 1st Prize for Best Use of Open Data during NWHacks 2016
 
-"Great :D I love Lamps."
-> Christophe
+## Install
 
-"You are a fruit, perhaps a pomegranate!"
-> Sarah
-
+```bash 
+pip3 install -r requirements.txt
+```
