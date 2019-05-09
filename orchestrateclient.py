@@ -7,5 +7,5 @@ def read_csv_file(file_name):
     with open(file_name) as csvfile:
         csv_data_reader = csv.DictReader(csvfile)
 
-response = client.put(read_csv_file('CityLight.csv'))
+response = client.put(read_csv_file('citylight.csv'))
 response.raise_for_status()
