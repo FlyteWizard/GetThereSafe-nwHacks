@@ -1,6 +1,5 @@
-Flask==0.10.1
+Flask==1.0.2
 Flask-SQLAlchemy==2.1
+SQLAlchemy==1.0.12
 googlemaps==2.4.2
 polyline==1.1
-psycopg2==2.6.1
-SQLAlchemy==1.0.12
