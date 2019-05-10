@@ -1,106 +1,102 @@
-<!doctype html-->
+<!DOCTYPE html>
 <html lang="en">
   <!-- Head -->
   <head>
     <!-- Meta -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Mobile ViewPort -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial" type="text/css">
     <!-- Title -->
-    <title>Get There Safe</title>
+    <title>Home | GetThereSafe</title>
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/GetThereSafeFavicon.png') }}" type="image/png">
-    <!-- StyleSheet -->
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" type="text/css">
-    <!-- BootStrap -->
-    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css') }}" type="text/css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/icon.png') }}" type="image/png">
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}" type="text/css"> <!-- Custom -->
   </head>
-
   <!-- Body -->
   <body>
-    <!-- Header -->
-    <nav class="navbar navbar-fixed-top">
-      <div id="shadow" class="container">
-        <!-- Logo -->
-        <img src="{{ url_for('static',filename='images/GetThereSafeLogo.png') }}" alt="Get There Safe App Logo">
-        <!-- Slogan -->
-        <h1>Don't get frightened on the way home.</h1>
-      </div>
-    </nav>
+    <!-- Navigation -->
+    <header>
+      <nav class="navbar navbar-light">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <img src="{{ url_for('static',filename='images/logo.png') }}" width="60" height="30" class="d-inline-block align-top"
+              alt="GetThereSafe">
+            GetThereSafe
+          </a>
+        </div>
+      </nav>
+    </header>
 
-    <div class="">
-      <!-- Background and Container -->
-      <div class="site-wrap body">
-        <!-- Row Class for Bootstrap -->
-        <div class="row>"
-          <!-- Beginning of box -->
-          <div id="text-wrap" class="col-xs-10 col-xs-push-1">
-            <h2>Find the route with the most lighting at night!</h2>
-            <p>Please type in your location and your desired destination. <br><br> </p>
-            <!-- Form -->
-            <form action="">
-              <input id="starting_point" type="text" class="textbox" placeholder="Start - 172 Wilson St Victoria"> <br><br>
-              <input id="ending_point" type="text" class="textbox" placeholder="Destination - 1180 Fort St Victoria"> <br><br>
-              <!-- TODO: Clear text field -->
+    <!-- Main -->
+    <main>
+      <!-- Information -->
+      <section class="container">
+        <div class="row d-flex justify-content-center text-center">
+          <div class="col-sm-12">
+            <h1>Find the route with the most lighting at night!</h1>
+            <h2>Don't get frightened on the way home.</h2>
+            <p>Please type in your location and your desired destination.</p>
+          </div>
+        </div>
+      </section>
+      <!-- Form -->
+      <section class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="col-sm-12">
+            <form>
+              <div class="form-group">
+                <input id="starting_point" type="text" class="form-control"
+                       placeholder="Start - 172 Wilson St Victoria">
+              </div>
+              <div class="form-group">
+                <input id="ending_point" type="text" class="form-control"
+                       placeholder="Destination - 1180 Fort St Victoria">
+              </div>
             </form>
-            <!-- Text for users -->
-            <p class="instruction">Click on the map to show location.</p>
-            <!-- -->
-            <p id="mapLoc" class="mapLoc"></p>
-            <!-- Search Button -->
-            <button id="bttn" class="button">Search</button>
-            <!-- Loading Spinner -->
-            <div>
-              <img id="img-spinner" src="{{ url_for('static',filename='images/spinner.gif') }}" alt="Loading Spinner"></img>
-            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 d-flex justify-content-end">
+            <button type="submit" id="bttn" class="btn btn-primary btn-lg">Search</button>
+          </div>
+        </div>
+      </section>
+      <!-- Information -->
+      <section class="container">
+        <div class="row d-flex justify-content-center text-center">
+          <div class="col-sm-12">
+            <!-- Instructions -->
+            <p>Click on the map to show location.</p>
+            <!-- Unknown -->
+            <p id="mapLocation"></p>
+            <!-- Disclaimer -->
+            <p>Contains information licensed under the Open Government Licence – City of Victoria.</p>
             <!-- Error Message -->
-            <div id="error">
+            <div class="error">
               <p>Could Not Load, Please Try Again.</p>
             </div>
             <!-- Information on Location -->
-            <div id="info">
-              <!-- Information Text -->
+            <div class="info">
               <p id="info-text"></p>
             </div>
-            <!-- Disclaimer -->
-            <p>Contains information licensed under the Open Government Licence – City of Victoria.</p>
           </div>
         </div>
-
-        <div class="clearfix visible-xs-block visible-sm-block"></div>
-
-        <!-- Google Maps -->
-        <div class="">
-          <div id="map" class="col-xs-10 col-xs-pull-1">
+      </section>
+      <!-- Google Maps -->
+      <section class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="col-sm-12">
+            <div id="map"></div>
           </div>
         </div>
-
-      </div>
-    </div>
-    <!-- Copyright - Dominique, Christophe, AJ 2016. -->
+      </section>
+    </main>
 
     <!-- Scripts -->
-    <!-- Jquery Script -->
-    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-    <!-- Google Map Script -->
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry"></script>
-    <!-- Link to scripts.js -->
-    <script type=text/javascript src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-74387078-2', 'auto');
-    ga('send', 'pageview');
-    </script>
-
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script> <!-- Jquery -->
+    <script type=text/javascript src="{{ url_for('static', filename='js/scripts.js') }}"></script> <!-- Custom -->
+    <script src="" async defer></script> <!-- Google Map -->
   </body>
 </html>

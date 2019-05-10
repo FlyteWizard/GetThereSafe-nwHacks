@@ -1,16 +1,17 @@
 var map;
 var polylines = [];
 
-// This is called as a callback after the google API is loaded properly into the page
+// initMap
 function initMap() {
-    // Get map div element
-    var mapDiv = $('#map')[0];
-    // Initialize the map in the div
-    map = new google.maps.Map(mapDiv, {
-      center: {lat: 48.428611, lng: -123.365556},
-      zoom: 14,
-      mapTypeId: google.maps.MapTypeId.TERRAIN
+    // Initiate Google Map
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {
+          lat: 48.428611, 
+          lng: -123.365556
+        },
+      zoom: 14
     });
+
     // Add a listener for when you click on the map -> Show address in the info box
     google.maps.event.addListener(map, 'click', function(event) {
         var geocoder = new google.maps.Geocoder();
@@ -20,7 +21,7 @@ function initMap() {
         geocoder.geocode({'location': latlng}, function(event, result){
             // Add address to the address info box
             var address = event[0].formatted_address;
-            $("#mapLoc").text(address);
+            $("#mapLocation").text(address);
         });
     });
 }
@@ -55,14 +56,13 @@ function mapRoute(routes) {
     // Let user know best path - Always returned as first route in the list of routes. First element
     // of the route is the number of street lights
     $("#info-text").text("Best route found with " + routes[0][0] + " street lights");
-    $("#info").show();
+    $(".info").show();
 }
 
 function getRoutes(starting_point, ending_point) {
-    // Hide errors and show loading spinner
-    $("#error").hide();
-    $("#info").hide();
-    $("#img-spinner").show();
+    // Hide errors
+    $(".error").hide();
+    $(".info").hide();
     // Ajax request to server to get best routes
     $.ajax({
       url: '/route',
@@ -72,10 +72,9 @@ function getRoutes(starting_point, ending_point) {
       routes = JSON.parse(data);
       mapRoute(routes);
     }).fail(function() {
-      $("#error").show();
+      $(".error").show();
     }).always(function() {
-        $("#mapLoc").text("");
-        $("#img-spinner").hide();
+        $("#mapLocation").text("");
     });
 }
 
