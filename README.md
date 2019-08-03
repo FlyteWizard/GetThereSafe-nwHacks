@@ -42,6 +42,8 @@ pip3 install Flask
 
 flask run / python3 app.py
 
+pip install python-dotenv
+
 ——
 
 CHANGE main.py to app.py
@@ -62,12 +64,6 @@ add restrictions: https://developers.google.com/maps/documentation/embed/get-api
 
 app API key to file / os.environ
 
----
-
-?? 
-
-psycopg2==2.6.1 (https://stackoverflow.com/questions/33866695/install-psycopg2-on-mac-osx-10-9-5)
-
 ----
 
 https://github.com/FlyteWizard/get-there-safe/tree/update
@@ -79,3 +75,43 @@ http://127.0.0.1:5000/
 https://getbootstrap.com/docs/4.3/components/buttons/
 
 https://kite.com/python/docs/os.environ
+
+https://pypi.org/project/python-dotenv/
+
+
+---
+
+postgre db
+
+heroku create app
+
+add-on heroku postgreql
+
+??? create data ???
+postgre locally? push to heroku?
+
+----
+
+Install https://postgresapp.com/
+
+Install CLI Tools https://postgresapp.com/documentation/cli-tools.html
+
+createdb gettheresafe
+
+psql gettheresafe
+
+CREATE TABLE coords (LNG float, LAT float);
+
+\copy coords FROM './citylight.csv' WITH (FORMAT csv);
+
+TABLE coords;
+
+heroku pg:push gettheresafe postgresql-globular-27132 --app gettheresafe-flytewizard
+
+heroku pg:push mylocaldb HEROKU_POSTGRESQL_MAGENTA --app sushi
+
+python3 manage.py db init
+
+python3 manage.py db migrate
+
+python3 manage.py db upgrade

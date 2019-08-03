@@ -27,6 +27,7 @@ function initMap() {
 }
 
 function mapRoute(routes) {
+    console.log("mapRoute"); // Error before this
     // For each route create a polyline and add to map
     for(var j = 0; j < routes.length; j++){
         latlngPoints = [];
@@ -64,12 +65,17 @@ function getRoutes(starting_point, ending_point) {
     $(".error").hide();
     $(".info").hide();
     // Ajax request to server to get best routes
+
+    console.log(starting_point);
+    
     $.ajax({
       url: '/route',
       type: 'POST',
       data: { start: starting_point, end: ending_point},
     }).done(function(data) {
+        console.log(data); // Error before this
       routes = JSON.parse(data);
+      console.log(routes); // Error before this
       mapRoute(routes);
     }).fail(function() {
       $(".error").show();
