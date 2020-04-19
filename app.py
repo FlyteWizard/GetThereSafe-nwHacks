@@ -29,51 +29,36 @@ def index():
 
 @app.route('/route', methods=['POST'])
 def get_routes():
-    start = request.form['start']
-    end = request.form['end']
+    data = request.json
+    start = data['start']
+    end = data['end']
 
     app.logger.info('%s AND %s' % (start, end))
 
     routes = gmaps.directions(start, end, alternatives=True)
+
     if not routes:
         raise Exception
-    
-    app.logger.info("Hello")
 
-    sorted_routes = _get_best_route(routes) # error here
-
-    app.logger.info(sorted_routes) # error happeining in _get_best_route
-
+    sorted_routes = _get_best_route(routes)
     return json.dumps(sorted_routes)
 
 
 def _get_best_route(routes):
-
-    app.logger.info("Hello in get best routes") # this is getting through
-
-    from model import Coord  # this is getting through
-
-    app.logger.info(Coord)  # this is getting through
+    from model import Coord
 
     # GET THE COORDS FROM DATABASE
-    all_coordinates = Coord.query.all() #Error happening here?
-   
-    app.logger.info('all coords')
-    app.logger.info(all_coordinates)
-   
+    all_coordinates = Coord.query.all()
+
     light_source_coords = []
     for coord in all_coordinates:
-        light_source_coords.append([int(coord.lat), int(coord.lng)])
+        light_source_coords.append([float(coord.lat), float(coord.lng)])
 
     route_rank = []
     for route in routes:
         polyline = route['overview_polyline']['points']
 
-        app.logger.info(polyline)
-
         decoded_route_coords = _get_coords_from_polyline(polyline)
-
-        app.logger.info(decoded_route_coords)
 
         # Calculate number of lightsources on the route
         light_sources = 0
@@ -81,6 +66,7 @@ def _get_best_route(routes):
         for coord in decoded_route_coords:
             # Get close lightsource or return None
             nearby_light_source = _get_nearby_lightsource(coord, light_source_coords)
+
             # Make sure the lightsource we found hasn't already been used
             if nearby_light_source and nearby_light_source != last_light_coord:
                 light_sources += 1
@@ -128,9 +114,4 @@ def _get_distance_between_points(coord_tuple_a, coord_tuple_b):
 
 # python3 app.py
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-
-    if port == 5000:
-        app.debug = True
-
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)

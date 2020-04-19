@@ -13,24 +13,43 @@ main {
 }
 
 main {
-  padding: 5rem 0;
+  padding: 2.5rem 0;
+}
+
+.information-header {
+  padding-bottom: 2.5rem;
+}
+
+.information-header h2 {
+  font-size: 1.6rem;
+}
+
+.map-information {
+  padding-top: 1rem;
+}
+
+#locationCard {
+  display: none;
+}
+
+/* Location Info */
+#infoCard {
+  display: none;
+}
+
+.card {
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  margin-bottom: 0;
+}
+
+.card-body {
+  align-items: center;
 }
 
 /* Goolgle Maps */
 #map {
-  height: 100%;
-  height: 500px;
+  height: 30rem;
 }
-
-/* Error Message */
-.error p {
-  display: none;
-  background-color: #FF0000;
-}
-
-/* Location Info */
-.info {
-  display: none;
-  background-color: #DCF7F7;
-}
-

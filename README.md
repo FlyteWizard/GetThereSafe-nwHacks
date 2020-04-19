@@ -92,23 +92,39 @@ postgre locally? push to heroku?
 
 ----
 
+Heroku Postgres Add-on -> Dev Hobby Free Tier
+
+---
+
+https://devcenter.heroku.com/articles/heroku-postgresql#local-setup
+
 Install https://postgresapp.com/
 
 Install CLI Tools https://postgresapp.com/documentation/cli-tools.html
+
+Open PostgreSQL app
+
+Initialize
+
+Start
 
 createdb gettheresafe
 
 psql gettheresafe
 
-CREATE TABLE coords (LNG float, LAT float);
+CREATE TABLE coords (ID integer, LNG float, LAT float);
 
 \copy coords FROM './citylight.csv' WITH (FORMAT csv);
 
 TABLE coords;
 
+heroku pg:reset
+
 heroku pg:push gettheresafe postgresql-globular-27132 --app gettheresafe-flytewizard
 
 heroku pg:push mylocaldb HEROKU_POSTGRESQL_MAGENTA --app sushi
+
+----
 
 python3 manage.py db init
 
