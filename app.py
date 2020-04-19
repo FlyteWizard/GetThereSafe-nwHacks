@@ -114,4 +114,4 @@ def _get_distance_between_points(coord_tuple_a, coord_tuple_b):
 
 # python3 app.py
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
