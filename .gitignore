@@ -1,9 +1,6 @@
 # MAC
 .DS_Store
 
-# Run Script
-run.sh
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

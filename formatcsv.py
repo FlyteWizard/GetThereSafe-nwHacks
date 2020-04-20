@@ -5,6 +5,6 @@ with open("citylight.csv", 'rb') as input, open('citylightdb.csv', 'wb') as outp
     writer = csv.writer(output, delimiter = ',')
 
     all = []
-    for k, row in enumerate(reader):
-        all.append([k+1] + row)
+    for i, row in enumerate(reader):
+        all.append([i+1] + row)
     writer.writerows(all)
