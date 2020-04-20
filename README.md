@@ -1,5 +1,7 @@
 # GetThereSafe
 
+https://gettheresafe-flytewizard.herokuapp.com
+
 GetTherSsafe is a Google Maps API web application to map out the safest route to your destination depending on the time of day.
 
 https://www.victoria.ca/EN/main/online-services/open-data-catalogue.html?media=zoom&media=zoom
@@ -52,6 +54,11 @@ CHANGE main.py to app.py
 
 Google Maps API
 
+2 api keys 
+
+* Backend (Private)
+* Frontend (Public w/ Restrictions)
+
 Select all options for api
 
 Create a new project
@@ -78,6 +85,9 @@ https://kite.com/python/docs/os.environ
 
 https://pypi.org/project/python-dotenv/
 
+https://getbootstrap.com
+
+https://gunicorn.org
 
 ---
 
@@ -119,8 +129,6 @@ CREATE TABLE coords (ID integer, LNG float, LAT float);
 TABLE coords;
 
 heroku pg:reset
-
-heroku pg:push gettheresafe postgresql-globular-27132 --app gettheresafe-flytewizard
 
 heroku pg:push mylocaldb HEROKU_POSTGRESQL_MAGENTA --app sushi
 
