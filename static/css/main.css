@@ -16,6 +16,7 @@ main {
   padding: 2.5rem 0;
 }
 
+/* Information Header */
 .information-header {
   padding-bottom: 2.5rem;
 }
@@ -24,19 +25,22 @@ main {
   font-size: 1.6rem;
 }
 
+/* Map Information */
 .map-information {
   padding-top: 1rem;
 }
 
+/* Location Information Card */
 #locationCard {
   display: none;
 }
 
-/* Location Info */
+/* Route Information Card */
 #infoCard {
   display: none;
 }
 
+/* Card */
 .card {
   margin-bottom: 0.5rem;
 }
