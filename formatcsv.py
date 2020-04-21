@@ -1,6 +1,6 @@
 import csv
 
-with open("citylight.csv", 'rt') as input, open('citylightdb.csv', 'wt') as output:
+with open("citylights.csv", 'rt') as input, open('citylightsdb.csv', 'wt') as output:
     reader = csv.reader(input, delimiter = ',')
     writer = csv.writer(output, delimiter = ',')
 
