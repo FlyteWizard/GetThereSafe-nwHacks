@@ -112,6 +112,5 @@ def _get_distance_between_points(coord_tuple_a, coord_tuple_b):
     return int((R * c) * 1000)
 
 
-# python3 app.py
 if __name__ == '__main__':
     app.run()
