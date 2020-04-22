@@ -145,7 +145,7 @@ python3 app.py
 
 1. Add [access restrictions](https://developers.google.com/maps/documentation/embed/get-api-key#key-restrictions) to your frontend API Key. This is important to prevent your API Key from being misused.
 
-2. Create a new app on Heroku. Within your gettheresafe directory, run the following commands.
+2. Create a new app on Heroku. Within your `gettheresafe` directory, run the following commands.
 
 ```sh
 heroku create gettheresafe-username
