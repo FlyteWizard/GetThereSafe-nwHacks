@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin');
+
+/* Global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header,
+main {
+  font-family: 'Cabin', sans-serif;
+}
+
+main {
+  padding: 2.5rem 0;
+}
+
+/* Information Header */
+.information-header {
+  padding-bottom: 2.5rem;
+}
+
+.information-header h2 {
+  font-size: 1.6rem;
+}
+
+/* Map Information */
+.map-information {
+  padding-top: 1rem;
+}
+
+/* Location Information Card */
+#locationCard {
+  display: none;
+}
+
+/* Route Information Card */
+#infoCard {
+  display: none;
+}
+
+/* Card */
+.card {
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  margin-bottom: 0;
+}
+
+.card-body {
+  align-items: center;
+}
+
+/* Goolgle Maps */
+#map {
+  height: 30rem;
+}

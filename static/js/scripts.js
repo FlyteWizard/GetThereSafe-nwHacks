@@ -1,92 +1,170 @@
-var map;
-var polylines = [];
+let map;
+let polylines = [];
 
-// This is called as a callback after the google API is loaded properly into the page
+// initMap
 function initMap() {
-    // Get map div element
-    var mapDiv = $('#map')[0];
-    // Initialize the map in the div
-    map = new google.maps.Map(mapDiv, {
-      center: {lat: 48.428611, lng: -123.365556},
-      zoom: 14,
-      mapTypeId: google.maps.MapTypeId.TERRAIN
+  // Initialize Map
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: {
+      lat: 48.428611,
+      lng: -123.365556
+    },
+    zoom: 14
+  });
+
+  // When user clicks on the map show location address
+  google.maps.event.addListener(map, "click", function(event) {
+    let geocoder = new google.maps.Geocoder();
+    let latlngobj = event.latLng;
+
+    // LatLng
+    let latlng = { 
+      lat: parseFloat(latlngobj.lat()),
+      lng: parseFloat(latlngobj.lng())
+    };
+    
+    geocoder.geocode({ 
+      "location": latlng 
+    }, function(event) {
+      // Display Address
+      let address = event[0].formatted_address;
+      document.getElementById("locationCard").style.display = "block";
+      document.getElementById("mapLocation").innerText = address;
     });
-    // Add a listener for when you click on the map -> Show address in the info box
-    google.maps.event.addListener(map, 'click', function(event) {
-        var geocoder = new google.maps.Geocoder();
-        latlngobj = event.latLng;
-        // Create a latlng object based on where the user clicked on the map
-        var latlng = {lat: parseFloat(latlngobj.lat()), lng: parseFloat(latlngobj.lng())};
-        geocoder.geocode({'location': latlng}, function(event, result){
-            // Add address to the address info box
-            var address = event[0].formatted_address;
-            $("#mapLoc").text(address);
-        });
-    });
+  });
 }
 
-function mapRoute(routes) {
-    // For each route create a polyline and add to map
-    for(var j = 0; j < routes.length; j++){
-        latlngPoints = [];
-        // For each lat and lng of the route add to the latlngPoints array
-        for(var i = 0; i < routes[j][2].length; i++) {
-            latlngPoints.push({lat: routes[j][2][i][0], lng: routes[j][2][i][1]});
-        }
-        // Choose either small stroke for optional route or big stroke for best route
-        var strokeColor = '#00CC00';
-        var strokeWeight = 5;
-        if(j >= 1){
-            strokeColor = '#0000FF';
-            strokeWeight = 1.5;
-        }
-        // Create a polyline out of the array latlngPoints we created
-        var polyline = new google.maps.Polyline({
-            path: latlngPoints,
-            geodesic: true,
-            strokeColor: strokeColor,
-            strokeOpacity: 0.5,
-            strokeWeight: strokeWeight
-        });
+// Map Routes
+const mapRoutes = (routes) => {
+  let strokeColor;
+  let strokeWeight;
+  let strokeOpacity;
 
-        polyline.setMap(map);
-        polylines.push(polyline);
+  // For every route in routes
+  for(let route = 0; route < routes.length; route++) {
+    let latlngPoints = [];
+
+    // For every latlngpoint in route
+    for (let latlngPoint = 0; latlngPoint < routes[route][2].length; latlngPoint++) {
+      latlngPoints.push({
+        lat: routes[route][2][latlngPoint][0],
+        lng: routes[route][2][latlngPoint][1]
+      });
     }
-    // Let user know best path - Always returned as first route in the list of routes. First element
-    // of the route is the number of street lights
-    $("#info-text").text("Best route found with " + routes[0][0] + " street lights");
-    $("#info").show();
+
+    // Best route
+    strokeColor = "#28a745";
+    strokeWeight = 5;
+    strokeOpacity = 0.8;
+
+    // Secondary route(s)
+    if(route >= 1) {
+      strokeColor = "#6c757d";
+      strokeWeight = 2;
+      strokeOpacity = 0.5;
+    }
+
+    // Create polyline
+    let polyline = new google.maps.Polyline({
+      path: latlngPoints,
+      geodesic: true,
+      strokeColor: strokeColor,
+      strokeOpacity: strokeOpacity,
+      strokeWeight: strokeWeight
+    });
+
+    // Display on map
+    polyline.setMap(map);
+    polylines.push(polyline);
+  }
+
+  // Display infoText
+  let infoText = "The best route is highlighted in green and has " + routes[0][0] + " city lights";
+  document.getElementById("infoCard").style.display = "block";
+  document.getElementById("infoText").innerText = infoText;
 }
 
-function getRoutes(starting_point, ending_point) {
-    // Hide errors and show loading spinner
-    $("#error").hide();
-    $("#info").hide();
-    $("#img-spinner").show();
-    // Ajax request to server to get best routes
-    $.ajax({
-      url: '/route',
-      type: 'POST',
-      data: { start: starting_point, end: ending_point},
-    }).done(function(data) {
-      routes = JSON.parse(data);
-      mapRoute(routes);
-    }).fail(function() {
-      $("#error").show();
-    }).always(function() {
-        $("#mapLoc").text("");
-        $("#img-spinner").hide();
+// Get Routes
+const getRoutes = (startingPoint, endingPoint) => {
+  document.getElementById("locationCard").style.display = "none";
+  document.getElementById("infoCard").style.display = "none";
+
+  // locations
+  const locations = {
+    start: startingPoint,
+    end: endingPoint
+  };
+
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(locations),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  // Fetch request to /route
+  fetch('/route', options)
+    .then((response) => response.json())
+    .then((data) => {
+      mapRoutes(data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
     });
 }
 
-$("#bttn").click(function() {
-    // When search button is clicked
-    starting_point = $("#starting_point").val();
-    ending_point = $("#ending_point").val();
-    // Remove current path
-    for(var i = 0; i < polylines.length; i++) {
-        polylines[i].setMap(null);
-    }
-    // Get the best routes to location based on user inputted values
-    routes = getRoutes(starting_point, ending_point);
+// copyCode
+const copyCode = () => {
+  // Create textarea
+  let codeToCopy = document.createElement("textarea");
+
+  // Assign the textarea to the innerHTML of the cssCode
+  codeToCopy.value = document.getElementById("mapLocation").innerText;
+
+  // Append to codeToCopy
+  document.body.appendChild(codeToCopy);
+
+  // Focus
+  codeToCopy.focus();
+  // Select
+  codeToCopy.select();
+
+  // Copy
+  document.execCommand("copy")
+
+  // Remove textarea
+  document.body.removeChild(codeToCopy);
+}
+
+// Gather and Send Routes
+const sendRoutes = () => {
+  // Grab route information
+  let startingPoint = document.getElementById("startingLocation").value;
+  let endingPoint = document.getElementById("endingLocation").value;
+
+  // Clear map
+  for(let i = 0; i < polylines.length; i++) {
+    polylines[i].setMap(null);
+  }
+
+  // Send route information
+  if(startingPoint && endingPoint) {
+    getRoutes(startingPoint, endingPoint);
+  }
+}
+
+// Prevents Form Refresh On Submit
+// Keyboard Submit
+document.getElementById("endingLocation").addEventListener("keypress", function(event) {
+  if(event.keyCode == 13) {
+    event.preventDefault();
+    document.getElementById("sendRoutesFunction").click();
+  }
+});
+document.getElementById("startingLocation").addEventListener("keypress", function(event) {
+  if(event.keyCode == 13) {
+    event.preventDefault();
+    document.getElementById("sendRoutesFunction").click();
+  }
 });

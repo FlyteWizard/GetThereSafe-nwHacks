@@ -1,7 +1,8 @@
-from main import db
-
+from app import db
 
 class Coord(db.Model):
+    __tablename__ = 'coords'
+
     id = db.Column(db.Integer, primary_key=True)
     lng = db.Column(db.Float)
     lat = db.Column(db.Float)
