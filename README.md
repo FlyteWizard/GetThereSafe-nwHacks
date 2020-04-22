@@ -73,7 +73,6 @@ DATABASE_URL=
 
 7. Add your backend API Key to your `.env` file. Replace `YOUR_SUPER_SECRET_API_KEY` with your backend API Key.
 
-.env
 ```.env
 GOOGLE_API_KEY=YOUR_SUPER_SECRET_API_KEY
 DATABASE_URL=
